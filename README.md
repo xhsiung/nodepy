@@ -9,7 +9,7 @@ Call python code from node.js.
 ├── py
 │   └── main.py
 └── test.js
-
+![image](https://raw.githubusercontent.com/xhsiung/nodepy/master/imgs/struct.png)
 ```
 
 ## Usage
