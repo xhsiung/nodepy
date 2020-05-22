@@ -14,6 +14,7 @@ Call python code from node.js.
 
 ## JS Usage
 ```
+var addon = require('nodepy');
 //sync
 addon.doSync(str);
 
