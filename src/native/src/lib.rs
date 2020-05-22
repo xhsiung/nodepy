@@ -11,11 +11,9 @@ fn getPyRun( jstr: String )->String{
     let locals = PyDict::new(py);
     //locals.set_item("myname","alex");
 
-
     let mut ff = File::open("py/main.py").unwrap();
     let mut code = String::new();
     ff.read_to_string(&mut code);
-
 
     py.run(
         code.as_str(),
@@ -27,7 +25,6 @@ fn getPyRun( jstr: String )->String{
     let result = main.call1(py,( jstr, )).unwrap().extract::<String>(py).unwrap();
     format!("{}" , result )
 }
-
 
 struct MyTask{
     argument: String
