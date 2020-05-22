@@ -1,7 +1,18 @@
 # nodepy
 Call python code from node.js.
-## Usage
 
+##structure
+```
+├── node_modules
+│   └── nodepy
+│       └── index.node
+├── py
+│   └── main.py
+└── test.js
+
+```
+
+## Usage
 ```javascript
 var addon = require('nodepy');
 obj={"name":"alex","mobile":12345}
@@ -15,9 +26,10 @@ addon.doAsync( JSON.stringify( obj), (err, value)=>{
         console.log( value );
 });
 ```
-## Feature
 
+## Feature
 ```py/main.py
+#py/main.py
 def main( jstr ):
     import json
     obj = json.loads( jstr )
