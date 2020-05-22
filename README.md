@@ -18,7 +18,7 @@ Call python code from node.js.
 addon.doAsync(str);
 
 //async
-addon.doAsync(str,(err,val){});
+addon.doAsync(str,(err,val)=>{});
 ```
 
 ## Python Usage
