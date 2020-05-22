@@ -26,6 +26,7 @@ fn getPyRun( jstr: String )->String{
     format!("{}" , result )
 }
 
+
 struct MyTask{
     argument: String
 }
@@ -55,9 +56,7 @@ fn doSync(mut cx: FunctionContext) -> JsResult<JsString> {
 fn doAsync(mut cx: FunctionContext) -> JsResult<JsUndefined> {
     let jstr = cx.argument::<JsString>(0)?.value();
     let cb = cx.argument::<JsFunction>(1)?;
-
-    let ojstr = getPyRun( jstr );
-    let task = MyTask { argument: ojstr };
+    let task = MyTask { argument: jstr };
     task.schedule( cb );
 
     Ok( cx.undefined())
