@@ -1,7 +1,7 @@
 # nodepy
 Call python code from node.js.
 
-##structure
+## Structure
 ```
 ├── node_modules
 │   └── nodepy
@@ -9,8 +9,10 @@ Call python code from node.js.
 ├── py
 │   └── main.py
 └── test.js
-![image](https://raw.githubusercontent.com/xhsiung/nodepy/master/imgs/struct.png)
 ```
+
+## View
+![image](https://raw.githubusercontent.com/xhsiung/nodepy/master/imgs/struct.png)
 
 ## Usage
 ```javascript
