@@ -12,8 +12,25 @@ Call python code from node.js.
 └── test.js
 ```
 
-## Usage
+## JS Usage
+```
+//sync
+addon.doAsync(sts);
+
+//async
+addon.doAsync(str,(err,val){});
+```
+
+## Python Usage
+```
+#py/main.py
+def main(str):
+	return str
+```
+
+## Exmaple
 ```javascript
+//test.js
 var addon = require('nodepy');
 obj={"name":"alex","mobile":12345}
 
@@ -25,15 +42,14 @@ addon.doAsync( JSON.stringify( obj), (err, value)=>{
         console.log("async");
         console.log( value );
 });
-```
 
-## Feature
-```py/main.py
-#py/main.py
+
+//py/main.py
 def main( jstr ):
     import json
     obj = json.loads( jstr )
     return json.dumps(  {"success":True} )
 
 ```
+
 nodepy
