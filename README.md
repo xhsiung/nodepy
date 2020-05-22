@@ -25,6 +25,7 @@ addon.doAsync(str,(err,val){});
 ```
 #py/main.py
 def main(str):
+	//do something here
 	return str
 ```
 
