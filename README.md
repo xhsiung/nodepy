@@ -44,9 +44,9 @@ obj={"name":"alex","mobile":12345}
 console.log(  addon.doSync( JSON.stringify( obj)) );
 
 //async
-addon.doAsync( JSON.stringify( obj), (err, value)=>{
+addon.doAsync( JSON.stringify( obj), (err, val)=>{
         console.log("async");
-        console.log( value );
+        console.log( val );
 });
 
 
