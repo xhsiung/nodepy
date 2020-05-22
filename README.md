@@ -6,9 +6,9 @@ Call python code from node.js.
 ```
 ├── node_modules
 │   └── nodepy
-│       └── index.node
+│       └── index.node  //addon module
 ├── py
-│   └── main.py
+│   └── main.py  //編輯此檔
 └── test.js
 ```
 
