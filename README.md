@@ -40,12 +40,9 @@ def main(str):
 //test.js
 var addon = require('nodepy');
 obj={"name":"alex","mobile":12345}
+console.log(  addon.doSync("main" ,JSON.stringify( obj)) );
 
-//sync
-console.log(  addon.doSync( JSON.stringify( obj)) );
-
-//async
-addon.doAsync( JSON.stringify( obj), (err, val)=>{
+addon.doAsync("main2" ,JSON.stringify( obj), (err, val)=>{
         console.log("async");
         console.log( val );
 });
@@ -57,6 +54,10 @@ def main( jstr ):
     obj = json.loads( jstr )
     return json.dumps(  {"success":True} )
 
+def main2( jstr ):
+    import json
+    obj = json.loads( jstr )
+    return json.dumps(  {"success":False} )
 ```
 
 nodepy

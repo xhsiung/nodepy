@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f921bbc6-de50-4c14-bc6d-45286b764dae" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../py/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../py/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/native/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/native/src/lib.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../test.js" beforeDir="false" afterPath="$PROJECT_DIR$/../test.js" afterDir="false" />
     </list>
