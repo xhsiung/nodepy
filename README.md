@@ -16,10 +16,10 @@ Call python code from node.js.
 ```
 var addon = require('nodepy');
 //sync
-addon.doSync(str);
+addon.doSync(fnstr,str);
 
 //async
-addon.doAsync(str,(err,val)=>{});
+addon.doAsync(fnstr,str,(err,val)=>{});
 ```
 
 ## Python Usage
