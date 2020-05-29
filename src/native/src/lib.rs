@@ -5,7 +5,7 @@ use pyo3::{py_run, wrap_pyfunction };
 use std::fs::File;
 use std::io::Read;
 
-fn getPyRun( jstr: String )->String{
+fn getPyRun( fnstr: String, jstr: String )->String{
     let gil = Python::acquire_gil();
     let py = gil.python();
     let locals = PyDict::new(py);
@@ -21,14 +21,15 @@ fn getPyRun( jstr: String )->String{
         Some(locals)).unwrap();
 
     //get method
-    let main = locals.get_item("main").unwrap().to_object(py);
+    let main = locals.get_item( fnstr ).unwrap().to_object(py);
     let result = main.call1(py,( jstr, )).unwrap().extract::<String>(py).unwrap();
     format!("{}" , result )
 }
 
 
 struct MyTask{
-    argument: String
+    argument: String,
+    fnstr: String
 }
 
 impl Task for MyTask {
@@ -37,7 +38,7 @@ impl Task for MyTask {
     type JsEvent = JsString;
 
     fn perform(&self) -> Result<Self::Output, Self::Error> {
-        let ojstr = getPyRun( self.argument.clone()  );
+        let ojstr = getPyRun(  self.fnstr.clone(),self.argument.clone()  );
         Ok(  ojstr )
     }
 
@@ -46,17 +47,20 @@ impl Task for MyTask {
     }
 }
 
+
 fn doSync(mut cx: FunctionContext) -> JsResult<JsString> {
-    let jstr = cx.argument::<JsString>(0)?.value();
-    let ojstr = getPyRun( jstr );
+    let fnstr = cx.argument::<JsString>(0)?.value();
+    let jstr = cx.argument::<JsString>(1)?.value();
+    let ojstr = getPyRun( fnstr,jstr );
 
     Ok(cx.string(ojstr ))
 }
 
 fn doAsync(mut cx: FunctionContext) -> JsResult<JsUndefined> {
-    let jstr = cx.argument::<JsString>(0)?.value();
-    let cb = cx.argument::<JsFunction>(1)?;
-    let task = MyTask { argument: jstr };
+    let fnstr = cx.argument::<JsString>(0)?.value();
+    let jstr = cx.argument::<JsString>(1)?.value();
+    let cb = cx.argument::<JsFunction>(2)?;
+    let task = MyTask { argument: jstr , fnstr: fnstr };
     task.schedule( cb );
 
     Ok( cx.undefined())
