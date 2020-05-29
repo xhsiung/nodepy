@@ -8,5 +8,5 @@ def main2( jstr ):
     import sys,os
     sys.path.append( "%s/py"%(os.getcwd()))
     #add module py/mymodule.py
-    import mymodule.py
+    import mymodule
     return json.dumps(  {"success": False} )
