@@ -42,7 +42,7 @@ fn get_py_run(fnstr: String, jstr: String) -> PyResult<String> {
     Python::with_gil(|py| {
         let locals = PyDict::new(py);
         let mut code = String::new();
-        File::open("py/main.py")?.read_to_string(&mut code)?;
+        File::open("py/__init__.py")?.read_to_string(&mut code)?;
 
         let code_cstr = CString::new(code).unwrap();
         py.run(code_cstr.as_c_str(), None, Some(&locals))?;
