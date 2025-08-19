@@ -8,7 +8,7 @@ Call python code from node.js.
 │   └── nodepy
 │       └── nodepy.node  //addon module
 ├── py
-│   └── __init__.py  //程式進入main.py
+│   └── __init__.py  //程式進入def main():
 │   └── main.py      //編輯此檔
 └── test.js
 ```
