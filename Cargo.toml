@@ -9,7 +9,7 @@ version = "0.1.0"
 crate-type = ["cdylib"]
 
 [dependencies]
-napi = { version = "3.0.0", features = ["tokio_rt"] }
+napi = { version = "3.0.0", features = ["full"] }
 napi-derive = "3.0.0"
 pyo3 = { version = "0.25.1", features = ["auto-initialize"] }
 
