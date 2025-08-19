@@ -1,9 +1,10 @@
 
 def main( jstr ):
     import json
-    import sys,os
-    sys.path.append("%s/py"%os.getcwd())
-    #print( sys.path )
+    import sys,os, time
+    libpath = "%s/py"%os.getcwd()
+    if libpath not in sys.path:
+        sys.path.append(libpath)
 
     import main2
     main2.show()
