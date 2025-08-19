@@ -7,17 +7,19 @@ use pyo3::types::PyDict;
 use std::ffi::CString;
 use std::fs::File;
 use std::io::Read;
+use napi::bindgen_prelude::*;
 
 use napi::threadsafe_function::{ThreadsafeFunction, ThreadsafeFunctionCallMode};
 use napi::Task;
 
-pub struct AsyncTask {
+pub struct Work {
   fnstr: String,
   jstr: String,
+  callback: Option<ThreadsafeFunction<String>>,
 }
 
 #[napi]
-impl Task for AsyncTask {
+impl Task for Work {
   type Output = String;
   type JsValue = String;
 
@@ -29,6 +31,9 @@ impl Task for AsyncTask {
   }
 
   fn resolve(&mut self, _env: napi::Env, output: Self::Output) -> napi::Result<Self::JsValue> {
+    if let Some(callback) = &self.callback {
+      callback.call(Ok(output.clone()), ThreadsafeFunctionCallMode::Blocking);
+    }
     Ok(output)
   }
 }
@@ -61,21 +66,27 @@ pub fn do_sync(fnstr: String, jstr: String) -> String {
     }
 }
 
+
 #[napi]
-pub fn do_async_task(fnstr: String, jstr: String) -> napi::Result<String> {
-  let mut task = AsyncTask { fnstr, jstr };
-  let result = task.compute()?;
-  Ok(result)
+pub fn do_async_task(fnstr: String, jstr: String) -> AsyncTask<Work> {
+  AsyncTask::new(Work {
+    fnstr,
+    jstr,
+    callback: None,
+  })
 }
 
 #[napi]
 pub fn do_async_task_callback(
   fnstr: String,
   jstr: String,
-  cb: ThreadsafeFunction<String>,
-) -> napi::Result<()> {
-  let mut task = AsyncTask { fnstr, jstr };
-  let result = task.compute()?;
-  cb.call(Ok(result), ThreadsafeFunctionCallMode::Blocking);
-  Ok(())
+  callback: ThreadsafeFunction<String>,
+) -> AsyncTask<Work> {
+  AsyncTask::new(Work {
+    fnstr,
+    jstr,
+    callback: Some(callback),
+  })
 }
+
+

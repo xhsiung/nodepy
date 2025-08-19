@@ -1,4 +1,4 @@
-const { doSync,doAsyncTask, doAsyncTaskCallback } = require('./nodepy');
+const { doSync, doAsyncTask, doAsyncTaskCallback } = require('./nodepy');
 
 async function main() {
   const fnstr = 'main';
@@ -19,10 +19,18 @@ async function main() {
   }
   // Test doAsyncTaskCallback
   console.log('\nTesting doAsyncTaskCallback...');
-  doAsyncTaskCallback(fnstr, jstr, (r1,r2) => {
-    console.log('doAsyncTaskCallback result:', r1, r2);
-    console.log( r2);
-  });
+  try {
+    const result = await doAsyncTaskCallback(fnstr, jstr, (err, result) => {
+      if (err) {
+        console.error('doAsyncTaskCallback (callback) error:', err);
+        return;
+      }
+      console.log('doAsyncTaskCallback (callback) result:', result);
+    });
+    console.log('doAsyncTaskCallback (promise) result:', result);
+  } catch (err) {
+    console.error('doAsyncTaskCallback (promise) error:', err);
+  }
 
 }
 
