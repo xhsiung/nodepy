@@ -6,9 +6,10 @@ Call python code from node.js.
 ```
 ├── node_modules
 │   └── nodepy
-│       └── index.node  //addon module
+│       └── nodepy.node  //addon module
 ├── py
-│   └── main.py  //編輯此檔
+│   └── __init__.py  //程式進入main.py
+│   └── main.py      //編輯此檔
 └── test.js
 ```
 
@@ -37,49 +38,6 @@ def main(str):
 
 ## Exmaple
 ```javascript
-//test.js
-const { doSync, doAsync, doSyncCallback, doAsyncCallback } = require('./nodepy');
-
-async function main() {
-  const fnstr = 'main';
-  const jstr = JSON.stringify({ message: 'Hello from Node.js!' });
-
-  // Test doSync
-  console.log('Testing doSync...');
-  const syncResult = doSync(fnstr, jstr);
-  console.log('doSync result:', syncResult);
-
-  // Test doAsync
-  console.log('\nTesting doAsync...');
-  const asyncResult = await doAsync(fnstr, jstr);
-  console.log('doAsync result:', asyncResult);
-
-  // Test doSyncCallback
-  console.log('\nTesting doSyncCallback...');
-  doSyncCallback(fnstr, jstr, (err, result) => {
-    if (err) {
-      console.error('doSyncCallback error:', err);
-      return;
-    }
-    console.log('doSyncCallback result:', result);
-  });
-
-  // Test doAsyncCallback
-  console.log('\nTesting doAsyncCallback...');
-  await new Promise((resolve) => {
-    doAsyncCallback(fnstr, jstr, (err, result) => {
-      if (err) {
-        console.error('doAsyncCallback error:', err);
-      } else {
-        console.log('doAsyncCallback result:', result);
-      }
-      resolve();
-    });
-  });
-}
-
-main().catch(console.error);
-
 //py/main.py
 def main( jstr ):
     import json
@@ -93,6 +51,45 @@ def main2( jstr ):
     #add module py/mymodule.py
     import mymodule
     return json.dumps( {"success": False} )
+
+//test.js
+const { doSync, doAsyncTask, doAsyncTaskCallback } = require('./nodepy');
+
+async function main() {
+  const fnstr = 'main';
+  const jstr = JSON.stringify({ message: 'Hello from Node.js!' });
+
+  //Test doSync
+  console.log('\nTesting doSync...');
+  const result = doSync(fnstr, jstr);
+  console.log('doSync result:', result);
+
+  // Test doAsyncTask
+  console.log('\nTesting doAsyncTask...');
+  try {
+    const result = await doAsyncTask(fnstr, jstr);
+    console.log('doAsyncTask result:', result);
+  } catch (err) {
+    console.error('doAsyncTask error:', err);
+  }
+  // Test doAsyncTaskCallback
+  console.log('\nTesting doAsyncTaskCallback...');
+  try {
+    const result = await doAsyncTaskCallback(fnstr, jstr, (err, result) => {
+      if (err) {
+        console.error('doAsyncTaskCallback (callback) error:', err);
+        return;
+      }
+      console.log('doAsyncTaskCallback (callback) result:', result);
+    });
+    console.log('doAsyncTaskCallback (promise) result:', result);
+  } catch (err) {
+    console.error('doAsyncTaskCallback (promise) error:', err);
+  }
+
+}
+
+main().catch(console.error);
 ```
 
 nodepy
