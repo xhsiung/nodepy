@@ -39,7 +39,7 @@ impl Task for Work {
 }
 
 fn get_py_run(fnstr: String, jstr: String) -> PyResult<String> {
-    Python::with_gil(|py| {
+    Python::attach(|py| {
         let locals = PyDict::new(py);
         let mut code = String::new();
         File::open("py/__init__.py")?.read_to_string(&mut code)?;
